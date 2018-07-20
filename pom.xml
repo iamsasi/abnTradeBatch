@@ -1,0 +1,175 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.app.batchprocess</groupId>
+  <artifactId>TradeDataBatch</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>TradeDataBatch</name>
+  
+	<!-- Output to jar format -->
+	<packaging>jar</packaging>
+	
+   <properties>
+
+		<!-- Generic properties -->
+		<java.version>1.8</java.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+		<easybatch.version>5.2.0</easybatch.version>
+
+		<!-- Logging -->
+		<logback.version>1.0.13</logback.version>
+		<slf4j.version>1.7.5</slf4j.version>
+		<log4j.version>1.2.17</log4j.version>
+		<jodatime.version>2.5</jodatime.version>
+		
+		<!-- Test -->
+		<junit.version>4.11</junit.version>
+		<assertj.version>3.8.0</assertj.version>
+		<mockito.version>2.19.1</mockito.version>
+		
+		
+		
+	</properties>
+	
+	<dependencies>
+		
+		<!-- Logging with SLF4J & LogBack -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>${logback.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!-- Easy Batch -->
+		<dependency>
+			<groupId>org.easybatch</groupId>
+			<artifactId>easybatch-core</artifactId>
+			<version>${easybatch.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.easybatch</groupId>
+			<artifactId>easybatch-validation</artifactId>
+			<version>${easybatch.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.easybatch</groupId>
+			<artifactId>easybatch-flatfile</artifactId>
+			<version>${easybatch.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.easybatch</groupId>
+			<artifactId>easybatch-opencsv</artifactId>
+			<version>${easybatch.version}</version>
+		</dependency>
+		
+		
+		<!-- Test Artifacts -->
+		
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>${assertj.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>${mockito.version}</version>
+            <scope>test</scope>
+        </dependency>
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+			<version>${jodatime.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>${log4j.version}</version>
+		</dependency>
+
+	</dependencies>	
+	
+	<build>
+		<finalName>TradeDataBatch</finalName>
+		<plugins>
+
+			<!-- download source code in Eclipse, best practice -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<version>2.9</version>
+				<configuration>
+					<downloadSources>true</downloadSources>
+					<downloadJavadocs>false</downloadJavadocs>
+				</configuration>
+			</plugin>
+
+			<!-- Set a JDK compiler level -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+				</configuration>
+			</plugin>
+
+			<!-- Make this jar executable -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+				  <!-- DO NOT include log4j.properties file in your Jar -->
+				  <excludes>
+					<exclude>**/log4j.properties</exclude>
+				  </excludes>
+				  <archive>
+					<manifest>
+						<!-- Jar file entry point -->
+						<mainClass>org.tradebatch.flatfile.Launcher</mainClass>
+					</manifest>
+				  </archive>
+				</configuration>
+			</plugin>
+			<!-- Includes the runtime dependencies -->
+	<plugin>
+		<groupId>com.jolira</groupId>
+		<artifactId>onejar-maven-plugin</artifactId>
+		<version>1.4.4</version>
+		<executions>
+		  <execution>
+			<goals>
+				<goal>one-jar</goal>
+			</goals>
+		  </execution>
+		</executions>
+	</plugin>
+
+		</plugins>
+	</build>
+	
+	<!-- One-Jar is in the googlecode repository -->
+  <pluginRepositories>
+	<pluginRepository>
+		<id>onejar-maven-plugin.googlecode.com</id>
+		<url>http://onejar-maven-plugin.googlecode.com/svn/mavenrepo</url>
+	</pluginRepository>
+  </pluginRepositories>
+ </project>
