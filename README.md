@@ -9,3 +9,5 @@ C:\Sasi\TradeDataBatch>java -jar TradeDataBatch.jar
 
 Generated Output File: 
 C:\Sasi\TradeDataBatch\target\summaryReport.csv
+
+Contact imsasi@hotmail.com if you have any questions
